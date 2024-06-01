@@ -3,6 +3,7 @@ package com.jjsoftwares.suaacademia.services;
 import com.jjsoftwares.suaacademia.dto.AuthUserDTO;
 import com.jjsoftwares.suaacademia.dto.CreateUserDTO;
 import com.jjsoftwares.suaacademia.dto.RecoveryJWTTokenDTO;
+import com.jjsoftwares.suaacademia.entities.Role;
 import com.jjsoftwares.suaacademia.entities.User;
 import com.jjsoftwares.suaacademia.repositories.UserRepository;
 import com.jjsoftwares.suaacademia.security.authentication.JwtTokenService;
@@ -13,6 +14,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AuthService {
@@ -44,7 +47,7 @@ public class AuthService {
         User newUser = User.builder()
                 .email(createUserDto.email())
                 .password(securityConfiguration.passwordEncoder().encode(createUserDto.password()))
-//                .roles(List.of(Role.builder().name(createUserDto.role()).build()))
+                .roles(List.of(Role.builder().name(createUserDto.role()).build()))
                 .name(createUserDto.name())
                 .build();
 

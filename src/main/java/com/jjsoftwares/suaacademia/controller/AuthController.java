@@ -4,26 +4,29 @@ import com.jjsoftwares.suaacademia.dto.AuthUserDTO;
 import com.jjsoftwares.suaacademia.dto.CreateUserDTO;
 import com.jjsoftwares.suaacademia.dto.RecoveryJWTTokenDTO;
 import com.jjsoftwares.suaacademia.services.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@Validated
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<RecoveryJWTTokenDTO> authenticateUser(@RequestBody AuthUserDTO loginUserDto) {
+    public ResponseEntity<RecoveryJWTTokenDTO> authenticateUser(@RequestBody @Valid AuthUserDTO loginUserDto) {
         RecoveryJWTTokenDTO token = authService.authenticateUser(loginUserDto);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@RequestBody CreateUserDTO createUserDto) {
+    public ResponseEntity<Void> createUser(@RequestBody @Valid CreateUserDTO createUserDto) {
         authService.createUser(createUserDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
